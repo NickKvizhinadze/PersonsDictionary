@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <UserSecretsId>172db43b-481c-42e2-8755-00fe10108f02</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonsDictionary.Application\PersonsDictionary.Application.csproj" />
+    <ProjectReference Include="..\PersonsDictionary.Common\PersonsDictionary.Common.csproj" />
+    <ProjectReference Include="..\PersonsDictionary.Domain\PersonsDictionary.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
