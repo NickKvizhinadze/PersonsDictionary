@@ -5,7 +5,7 @@ using PersonsDictionary.Api.Attributes;
 using PersonsDictionary.Domain.Enums;
 using PersonsDictionary.Localization;
 
-namespace PersonsDictionary.Application.Persons
+namespace PersonsDictionary.Api.Persons.Models
 {
     public class PersonCreateViewModel
     {
@@ -32,7 +32,5 @@ namespace PersonsDictionary.Application.Persons
 
         [Required(ErrorMessageResourceType = typeof(ErrorMessages), ErrorMessageResourceName = nameof(ErrorMessages.Required))]
         public int CityId { get; set; }
-
-        public IFormFile Image { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace PersonsDictionary.Persistence.Repositories
 
         #region Properties
 
-        protected virtual DbSet<T> Entities
+        private DbSet<T> Entities
         {
             get
             {
@@ -41,12 +41,12 @@ namespace PersonsDictionary.Persistence.Repositories
             }
         }
 
-        private IQueryable<T> Table
+        protected IQueryable<T> Table
         {
             get { return Entities; }
         }
 
-        private IQueryable<T> TableNoTracking
+        protected IQueryable<T> TableNoTracking
         {
             get { return Entities.AsNoTracking(); }
         }
@@ -78,7 +78,7 @@ namespace PersonsDictionary.Persistence.Repositories
 
             _context.AddRange(entities);
         }
-        
+
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

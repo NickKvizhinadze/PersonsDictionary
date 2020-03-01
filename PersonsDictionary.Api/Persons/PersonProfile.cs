@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PersonsDictionary.Api.Persons.Models;
 using PersonsDictionary.Application.Persons;
 
 namespace PersonsDictionary.Api.Persons

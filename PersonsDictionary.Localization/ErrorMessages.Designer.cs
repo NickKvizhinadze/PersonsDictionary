@@ -61,6 +61,15 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to სურათის ატვირთვა აუცილებელია.
+        /// </summary>
+        public static string ImageIsRequired {
+            get {
+                return ResourceManager.GetString("ImageIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to სისტემური შეცდომა.
         /// </summary>
         public static string InternalServerError {
@@ -93,6 +102,15 @@ namespace PersonsDictionary.Localization {
         public static string OnlyEnglishOrGeorgian {
             get {
                 return ResourceManager.GetString("OnlyEnglishOrGeorgian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to პერსონა ვერ მოიძებნა.
+        /// </summary>
+        public static string PersonNotFound {
+            get {
+                return ResourceManager.GetString("PersonNotFound", resourceCulture);
             }
         }
         

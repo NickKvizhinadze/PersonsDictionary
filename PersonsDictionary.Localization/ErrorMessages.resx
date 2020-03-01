@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ImageIsRequired" xml:space="preserve">
+    <value>სურათის ატვირთვა აუცილებელია</value>
+  </data>
   <data name="InternalServerError" xml:space="preserve">
     <value>სისტემური შეცდომა</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="OnlyEnglishOrGeorgian" xml:space="preserve">
     <value>{0} ველი უნდა შეიცავდეს მხოლოდ ლათინურ ან მხოლოდ ქართულ ასოებს</value>
+  </data>
+  <data name="PersonNotFound" xml:space="preserve">
+    <value>პერსონა ვერ მოიძებნა</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>ველის შევსება აუცილებელია</value>

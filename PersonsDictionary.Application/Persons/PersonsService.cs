@@ -7,6 +7,7 @@ using PersonsDictionary.Common.Helpers;
 using PersonsDictionary.Common.Models;
 using PersonsDictionary.Domain.Persons;
 using PersonsDictionary.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace PersonsDictionary.Application.Persons
 {
@@ -33,35 +34,67 @@ namespace PersonsDictionary.Application.Persons
 
         #region Methods
 
-        public async Task<Result<int>> AddAsync(PersonCreateRequest model, string webRootDir, int id = 0)
+        public async Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0)
         {
             var result = new Result<int>();
-            string imageUrl = null;
             try
             {
                 var person = _mapper.Map<Person>(model);
 
-                if (model.Image != null)
-                {
-                    imageUrl = await ImageManager.UploadImageAsync(model.Image, webRootDir, Dir);
-                    person.ImageUrl = imageUrl;
-                }
-
                 if (id > 0)
                 {
                     person.Id = id;
+                    person.ImageUrl = await _uow.Persons.GetImageUrlAsync(id);
                     _uow.Persons.Update(person);
                 }
                 else
                     _uow.Persons.Add(person);
 
                 await _uow.SaveAsync();
-                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(AddAsync)} | Person added successfully | Id: {id}");
+                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Person added successfully | Id: {id}");
                 result.Data = person.Id;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(PersonsService)} => {nameof(AddAsync)} | Person have not added successfully | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Person have not added successfully | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+
+                result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
+            }
+            return result;
+        }
+
+
+        public async Task<Result<string>> UploadPhotoAsync(int id, IFormFile image, string webRootDir)
+        {
+            var result = new Result<string>();
+            string imageUrl = null;
+            try
+            {
+                if (image == null)
+                {
+                    result.AddError(ErrorMessages.ImageIsRequired);
+                    return result;
+                }
+
+                var person = await _uow.Persons.GetByIdAsync(id);
+                if (person == null)
+                {
+                    result.AddError(ErrorMessages.PersonNotFound);
+                    return result;
+                }
+
+                imageUrl = await ImageManager.UploadImageAsync(image, webRootDir, Dir);
+
+                person.ImageUrl = imageUrl;
+                _uow.Persons.Update(person);
+                await _uow.SaveAsync();
+
+                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Photo added to person | Id: {id}");
+                result.Data = imageUrl;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Photo have not added to person| Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
                 if (!string.IsNullOrEmpty(imageUrl))
                     ImageManager.DeleteImage(imageUrl, webRootDir, Dir);
 
