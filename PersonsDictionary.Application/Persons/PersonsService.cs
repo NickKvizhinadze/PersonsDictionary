@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using PersonsDictionary.Localization;
@@ -32,6 +33,12 @@ namespace PersonsDictionary.Application.Persons
         #endregion
 
         #region Methods
+
+        public async Task<PersonDto> GetByIdAsync(int id)
+        {
+            var result = await _uow.Persons.GetByIdAsync(id);
+            return _mapper.Map<PersonDto>(result);
+        }
         public async Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0)
         {
             var result = new Result<int>();

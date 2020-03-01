@@ -29,9 +29,16 @@ namespace PersonsDictionary.Api.Persons.Controllers
         #endregion
 
         #region Actions
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PersonDto>> Get(int id)
+        {
+            var result = await _service.GetByIdAsync(id);
+
+            return Ok(result);
+        }
         [HttpPost]
         [ModelState]
-        public async Task<IActionResult> Create([FromBody] PersonCreateViewModel model)
+        public async Task<ActionResult<int>> Create([FromBody] PersonCreateViewModel model)
         {            
             var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model));
 
@@ -39,7 +46,8 @@ namespace PersonsDictionary.Api.Persons.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] PersonCreateViewModel model)
+        [ModelState]
+        public async Task<ActionResult<int>> Update(int id, [FromBody] PersonCreateViewModel model)
         {
             var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model), id);
 
@@ -55,14 +63,15 @@ namespace PersonsDictionary.Api.Persons.Controllers
         }
 
         [HttpPost("[action]/{id}")]
-        public async Task<IActionResult> UploadPhoto(int id, [FromForm] IFormFile image)
+        public async Task<ActionResult<string>> UploadPhoto(int id, [FromForm] IFormFile image)
         {
             var result = await _service.UploadPhotoAsync(id, image, _env.ContentRootPath);
             return CustomResult(result);
         }
 
         [HttpPost("[action]/{id}")]
-        public async Task<IActionResult> Relatation(int id, [FromBody] RelatedPersonCreateViewModel model)
+        [ModelState]
+        public async Task<ActionResult<int>> Relatation(int id, [FromBody] RelatedPersonCreateViewModel model)
         {
             var result = await _service.AddedRelatedPersonAsync(id, _mapper.Map<RelatedPersonCreateRequest>(model));
             return CustomResult(result);

@@ -11,7 +11,7 @@ namespace PersonsDictionary.Api.Controllers
     public abstract class BaseApiController : ControllerBase
     {
         #region Protected Methods
-        protected IActionResult CustomResult<T>(Result<T> result)
+        protected ActionResult<T> CustomResult<T>(Result<T> result)
         {
             if (!result.Succeeded)
                 return ReturnErrorResult(result);
@@ -29,16 +29,14 @@ namespace PersonsDictionary.Api.Controllers
         #endregion
 
         #region Private Methods
-        private IActionResult ReturnErrorResult(Result result)
+        private ActionResult ReturnErrorResult(Result result)
         {
             AddErrors(result.Errors);
-            switch (result.StatusCode)
+            return result.StatusCode switch
             {
-                case HttpStatusCode.BadRequest:
-                    return BadRequest(ModelState);
-                default:
-                    return StatusCode((int)result.StatusCode);
-            }
+                HttpStatusCode.BadRequest => BadRequest(ModelState),
+                _ => StatusCode((int)result.StatusCode),
+            };
         }
 
         protected void AddErrors(IEnumerable<KeyValuePair<string, string>> errors)
