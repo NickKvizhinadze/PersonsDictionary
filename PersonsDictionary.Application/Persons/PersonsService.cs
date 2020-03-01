@@ -79,7 +79,7 @@ namespace PersonsDictionary.Application.Persons
             return result;
         }
 
-        public async Task<Result> DekteAsync(int id, string webRoot)
+        public async Task<Result> DeleteAsync(int id, string webRoot)
         {
             var result = new Result();
             using (var transaction = await _uow.BeginTransactionAsync())
@@ -95,7 +95,7 @@ namespace PersonsDictionary.Application.Persons
                         await _uow.SaveAsync();
                         ImageManager.DeleteImage(webRoot, imageUrl);
                         await transaction.CommitAsync();
-                        _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person deleted successfully | Id: {id}");
+                        _logger.LogError($"{nameof(PersonsService)} => {nameof(DeleteAsync)} | Person deleted successfully | Id: {id}");
                     }
                     else
                     {
@@ -105,7 +105,7 @@ namespace PersonsDictionary.Application.Persons
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                    _logger.LogError($"{nameof(PersonsService)} => {nameof(DeleteAsync)} | Person have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
 
                     result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
                     await transaction.RollbackAsync();
@@ -154,9 +154,9 @@ namespace PersonsDictionary.Application.Persons
             return result;
         }
 
-        public async Task<Result> AddedRelatedPersonAsync(int id, RelatedPersonCreateRequest model)
+        public async Task<Result<int>> AddedRelatedPersonAsync(int id, RelatedPersonCreateRequest model)
         {
-            var result = new Result();
+            var result = new Result<int>();
             try
             {
                 var person = await _uow.Persons.GetByIdAsync(id);
@@ -172,18 +172,46 @@ namespace PersonsDictionary.Application.Persons
                     return result;
                 }
 
-                _uow.PersonRelations.Add(new PersonRelation
+                var relation = new PersonRelation
                 {
                     PersonId = id,
                     RelatedPersonId = model.RelatedPersonId,
                     Type = model.Type
-                });
+                };
+                _uow.PersonRelations.Add(relation);
 
                 await _uow.SaveAsync();
+                result.Data = relation.Id;
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(AddedRelatedPersonAsync)} | Relation Added to person | Id: {id}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(AddedRelatedPersonAsync)} | Relation have not added to person | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
+            }
+
+            return result;
+        }
+
+        public async Task<Result> DeleteRelationAsync(int id)
+        {
+            var result = new Result();
+            try
+            {
+                var relation = await _uow.PersonRelations.GetByIdAsync(id);
+                if (relation == null)
+                {
+                    result.AddError(ErrorMessages.RelationNotFound);
+                    return result;
+                }
+
+                _uow.PersonRelations.Delete(relation);
+                await _uow.SaveAsync();
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(DeleteRelationAsync)} | Relation Added | Id: {id}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(DeleteRelationAsync)} | Relation have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
                 result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
             }
 

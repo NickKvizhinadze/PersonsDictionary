@@ -49,7 +49,7 @@ namespace PersonsDictionary.Api.Persons.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _service.DekteAsync(id, _env.ContentRootPath);
+            var result = await _service.DeleteAsync(id, _env.ContentRootPath);
 
             return CustomResult(result);
         }
@@ -62,9 +62,16 @@ namespace PersonsDictionary.Api.Persons.Controllers
         }
 
         [HttpPost("[action]/{id}")]
-        public async Task<IActionResult> AddRelatation(int id, [FromBody] RelatedPersonCreateViewModel model)
+        public async Task<IActionResult> Relatation(int id, [FromBody] RelatedPersonCreateViewModel model)
         {
             var result = await _service.AddedRelatedPersonAsync(id, _mapper.Map<RelatedPersonCreateRequest>(model));
+            return CustomResult(result);
+        }
+
+        [HttpDelete("[action]/{id}")]
+        public async Task<IActionResult> Relatation(int id)
+        {
+            var result = await _service.DeleteRelationAsync(id);
             return CustomResult(result);
         }
         #endregion

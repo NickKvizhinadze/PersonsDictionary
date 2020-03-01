@@ -124,6 +124,15 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to კავშირი ვერ მოიძებნა.
+        /// </summary>
+        public static string RelationNotFound {
+            get {
+                return ResourceManager.GetString("RelationNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ველის შევსება აუცილებელია.
         /// </summary>
         public static string Required {
