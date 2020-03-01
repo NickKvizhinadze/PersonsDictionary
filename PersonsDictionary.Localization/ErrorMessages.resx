@@ -120,8 +120,14 @@
   <data name="InternalServerError" xml:space="preserve">
     <value>სისტემური შეცდომა</value>
   </data>
+  <data name="MinAge" xml:space="preserve">
+    <value>უნდა იყოს მინიმუმ {0} წლის</value>
+  </data>
   <data name="MinAndMaxLength" xml:space="preserve">
     <value>{0} ველი უნდა შეიცავდეს მინიმუმ {2} სიმბოლოს და მაქსიმუმ {1}-ს</value>
+  </data>
+  <data name="OnlyEnglishOrGeorgian" xml:space="preserve">
+    <value>{0} ველი უნდა შეიცავდეს მხოლოდ ლათინურ ან მხოლოდ ქართულ ასოებს</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>ველის შევსება აუცილებელია</value>

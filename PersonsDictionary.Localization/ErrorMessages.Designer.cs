@@ -70,11 +70,29 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to უნდა იყოს მინიმუმ {0} წლის.
+        /// </summary>
+        public static string MinAge {
+            get {
+                return ResourceManager.GetString("MinAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} ველი უნდა შეიცავდეს მინიმუმ {2} სიმბოლოს და მაქსიმუმ {1}-ს.
         /// </summary>
         public static string MinAndMaxLength {
             get {
                 return ResourceManager.GetString("MinAndMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ველი უნდა შეიცავდეს მხოლოდ ლათინურ ან მხოლოდ ქართულ ასოებს.
+        /// </summary>
+        public static string OnlyEnglishOrGeorgian {
+            get {
+                return ResourceManager.GetString("OnlyEnglishOrGeorgian", resourceCulture);
             }
         }
         
