@@ -20,6 +20,8 @@ namespace PersonsDictionary.Domain.Persons
 
         #region Navigation Properties
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<PersonRelation> Relations { get; set; }
+        public ICollection<PersonRelation> RelatedToRelations { get; set; }
         public City City { get; set; }
         #endregion
     }

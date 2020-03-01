@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonsDictionary.Domain.Persons;
 
-namespace PersonsDictionary.Persistence.Mapping
+namespace PersonsDictionary.Persistence.Persons
 {
     public static class PhoneNumberMapper
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonsDictionary.Domain.Persons;
-using PersonsDictionary.Persistence.Mapping;
+using PersonsDictionary.Persistence.Persons;
+using PersonsDictionary.Persistence.Cities;
 
 namespace PersonsDictionary.Persistence
 {
@@ -37,6 +37,7 @@ namespace PersonsDictionary.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             PersonMapper.Map(modelBuilder);
+            PersonRelationMapper.Map(modelBuilder);
             PhoneNumberMapper.Map(modelBuilder);
             CityMapper.Map(modelBuilder);
 

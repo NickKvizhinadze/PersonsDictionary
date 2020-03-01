@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
 using System;
 using System.Net;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using PersonsDictionary.Localization;
 using PersonsDictionary.Common.Helpers;
 using PersonsDictionary.Common.Models;
 using PersonsDictionary.Domain.Persons;
-using PersonsDictionary.Localization;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
+using PersonsDictionary.Application.Persons.Models;
+using PersonsDictionary.Application.Persons.Abstractions;
 
 namespace PersonsDictionary.Application.Persons
 {
@@ -149,6 +151,42 @@ namespace PersonsDictionary.Application.Persons
 
                 result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
             }
+            return result;
+        }
+
+        public async Task<Result> AddedRelatedPersonAsync(int id, RelatedPersonCreateRequest model)
+        {
+            var result = new Result();
+            try
+            {
+                var person = await _uow.Persons.GetByIdAsync(id);
+                if (person == null)
+                {
+                    result.AddError(ErrorMessages.PersonNotFound);
+                    return result;
+                }
+                var relatedPerson = await _uow.Persons.GetByIdAsync(model.RelatedPersonId);
+                if (relatedPerson == null)
+                {
+                    result.AddError(ErrorMessages.RelatedPersonNotFound);
+                    return result;
+                }
+
+                _uow.PersonRelations.Add(new PersonRelation
+                {
+                    PersonId = id,
+                    RelatedPersonId = model.RelatedPersonId,
+                    Type = model.Type
+                });
+
+                await _uow.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
+            }
+
             return result;
         }
 

@@ -2,7 +2,7 @@
 using PersonsDictionary.Domain.Persons;
 using PersonsDictionary.Application.Common;
 
-namespace PersonsDictionary.Application.Persons
+namespace PersonsDictionary.Application.Persons.Abstractions
 {
     public interface IPersonsRepository : IBaseRepository<Person, int>
     {

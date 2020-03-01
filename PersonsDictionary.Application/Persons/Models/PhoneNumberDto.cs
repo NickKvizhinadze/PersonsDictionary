@@ -1,6 +1,6 @@
 ﻿using PersonsDictionary.Domain.Enums;
 
-namespace PersonsDictionary.Application.Persons
+namespace PersonsDictionary.Application.Persons.Models
 {
     public class PhoneNumberDto
     {

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PersonsDictionary.Domain.Persons;
-using PersonsDictionary.Application.Persons;
 using PersonsDictionary.Persistence.Repositories;
+using PersonsDictionary.Application.Persons.Abstractions;
 
 namespace PersonsDictionary.Persistence.Persons
 {

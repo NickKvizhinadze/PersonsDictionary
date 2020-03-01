@@ -61,6 +61,24 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ნაცნობი.
+        /// </summary>
+        public static string Acquaintance {
+            get {
+                return ResourceManager.GetString("Acquaintance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to კოლეგა.
+        /// </summary>
+        public static string Colleague {
+            get {
+                return ResourceManager.GetString("Colleague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ქალი.
         /// </summary>
         public static string Female {
@@ -70,11 +88,56 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to სახლი.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to კაცი.
         /// </summary>
         public static string Male {
             get {
                 return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მობილური.
+        /// </summary>
+        public static string Mobile {
+            get {
+                return ResourceManager.GetString("Mobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ოფისი.
+        /// </summary>
+        public static string Office {
+            get {
+                return ResourceManager.GetString("Office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to სხვა.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ნათესავი.
+        /// </summary>
+        public static string Relative {
+            get {
+                return ResourceManager.GetString("Relative", resourceCulture);
             }
         }
     }

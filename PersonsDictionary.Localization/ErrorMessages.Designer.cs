@@ -115,6 +115,15 @@ namespace PersonsDictionary.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to დაკავშირებული პერსონა ვერ მოიძებნა.
+        /// </summary>
+        public static string RelatedPersonNotFound {
+            get {
+                return ResourceManager.GetString("RelatedPersonNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ველის შევსება აუცილებელია.
         /// </summary>
         public static string Required {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using PersonsDictionary.Domain.Enums;
 
-namespace PersonsDictionary.Application.Persons
+namespace PersonsDictionary.Application.Persons.Models
 {
     public class PersonCreateRequest
     {

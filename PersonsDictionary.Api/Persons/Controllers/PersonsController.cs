@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using PersonsDictionary.Api.Attributes;
 using PersonsDictionary.Api.Controllers;
 using PersonsDictionary.Api.Persons.Models;
-using PersonsDictionary.Application.Persons;
+using PersonsDictionary.Application.Persons.Models;
+using PersonsDictionary.Application.Persons.Abstractions;
 
 namespace PersonsDictionary.Api.Persons.Controllers
 {
@@ -57,6 +58,13 @@ namespace PersonsDictionary.Api.Persons.Controllers
         public async Task<IActionResult> UploadPhoto(int id, [FromForm] IFormFile image)
         {
             var result = await _service.UploadPhotoAsync(id, image, _env.ContentRootPath);
+            return CustomResult(result);
+        }
+
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> AddRelatation(int id, [FromBody] RelatedPersonCreateViewModel model)
+        {
+            var result = await _service.AddedRelatedPersonAsync(id, _mapper.Map<RelatedPersonCreateRequest>(model));
             return CustomResult(result);
         }
         #endregion

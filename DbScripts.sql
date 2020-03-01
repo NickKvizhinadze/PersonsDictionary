@@ -37,3 +37,20 @@ GO
 ALTER TABLE PersonsDictionary.dbo.PhoneNumbers
   ADD CONSTRAINT FK_MobileNumbers_PersonId FOREIGN KEY (PersonId) REFERENCES dbo.Persons (Id) ON DELETE CASCADE
 GO
+
+CREATE TABLE PersonsDictionary.dbo.PersonRelations (
+  Id int IDENTITY,
+  PersonId int NOT NULL,
+  RelatedPersonId int NOT NULL,
+  Type int NULL
+)
+ON [PRIMARY]
+GO
+
+ALTER TABLE PersonsDictionary.dbo.PersonRelations
+  ADD CONSTRAINT FK_PersonRelations_PersonId FOREIGN KEY (PersonId) REFERENCES dbo.Persons (Id)
+GO
+
+ALTER TABLE PersonsDictionary.dbo.PersonRelations
+  ADD CONSTRAINT FK_PersonRelations_RelatedPersonId FOREIGN KEY (RelatedPersonId) REFERENCES dbo.Persons (Id)
+GO

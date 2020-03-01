@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PersonsDictionary.Api.Persons.Models;
-using PersonsDictionary.Application.Persons;
+using PersonsDictionary.Application.Persons.Models;
 
 namespace PersonsDictionary.Api.Persons
 {
@@ -10,6 +10,7 @@ namespace PersonsDictionary.Api.Persons
         {
             CreateMap<PersonCreateViewModel, PersonCreateRequest>();
             CreateMap<PhoneNumberViewModel, PhoneNumberDto>();
+            CreateMap<RelatedPersonCreateViewModel, RelatedPersonCreateRequest>();
         }
     }
 }

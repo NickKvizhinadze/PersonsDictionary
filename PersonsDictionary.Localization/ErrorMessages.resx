@@ -135,6 +135,9 @@
   <data name="PersonNotFound" xml:space="preserve">
     <value>პერსონა ვერ მოიძებნა</value>
   </data>
+  <data name="RelatedPersonNotFound" xml:space="preserve">
+    <value>დაკავშირებული პერსონა ვერ მოიძებნა</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>ველის შევსება აუცილებელია</value>
   </data>

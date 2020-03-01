@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PersonsDictionary.Application.Cities;
 using PersonsDictionary.Application.Common;
-using PersonsDictionary.Application.Persons;
 using PersonsDictionary.Persistence.Cities;
 using PersonsDictionary.Persistence.Common;
 using PersonsDictionary.Persistence.Persons;
-using PersonsDictionary.Persistence.Repositories;
+using PersonsDictionary.Application.Persons.Abstractions;
 
 namespace PersonsDictionary.Persistence
 {
@@ -14,6 +13,7 @@ namespace PersonsDictionary.Persistence
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddTransient<IPersonsRepository, PersonsRepository>();
+            services.AddTransient<IPersonRelationsRepository, PersonRelationsRepository>();
             services.AddTransient<IPhoneNumbersRepository, PhoneNumbersRepository>();
             services.AddTransient<ICitiesRepository, CitiesRepository>();
         }

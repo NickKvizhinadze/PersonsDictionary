@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PersonsDictionary.Domain.Persons;
+using PersonsDictionary.Application.Persons.Models;
 
 namespace PersonsDictionary.Application.Persons
 {
@@ -8,7 +9,7 @@ namespace PersonsDictionary.Application.Persons
         public PersonProfile()
         {
             CreateMap<PersonCreateRequest, Person>();                
-            CreateMap<PhoneNumberDto, PhoneNumber>();
+            CreateMap<PhoneNumberDto, PhoneNumber>(); 
         }
     }
 }

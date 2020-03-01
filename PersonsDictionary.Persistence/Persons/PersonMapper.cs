@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonsDictionary.Domain.Persons;
 
-namespace PersonsDictionary.Persistence.Mapping
+namespace PersonsDictionary.Persistence.Persons
 {
     public static class PersonMapper
     {
@@ -17,6 +17,8 @@ namespace PersonsDictionary.Persistence.Mapping
             modelBuilder.Entity<Person>().Property(e => e.CityId).IsRequired();
             modelBuilder.Entity<Person>().HasOne(e => e.City).WithMany(e => e.Persons);
             modelBuilder.Entity<Person>().HasMany(e => e.PhoneNumbers).WithOne(e => e.Person).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Person>().HasMany(e => e.Relations).WithOne(e => e.Person).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Person>().HasMany(e => e.RelatedToRelations).WithOne(e => e.RelatedPerson);
         }
     }
 }

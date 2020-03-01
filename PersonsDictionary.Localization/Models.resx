@@ -117,10 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Acquaintance" xml:space="preserve">
+    <value>ნაცნობი</value>
+  </data>
+  <data name="Colleague" xml:space="preserve">
+    <value>კოლეგა</value>
+  </data>
   <data name="Female" xml:space="preserve">
     <value>ქალი</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>სახლი</value>
+  </data>
   <data name="Male" xml:space="preserve">
     <value>კაცი</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>მობილური</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>ოფისი</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>სხვა</value>
+  </data>
+  <data name="Relative" xml:space="preserve">
+    <value>ნათესავი</value>
   </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PersonsDictionary.Application.Persons;
+using PersonsDictionary.Application.Persons.Abstractions;
 
 namespace PersonsDictionary.Application
 {

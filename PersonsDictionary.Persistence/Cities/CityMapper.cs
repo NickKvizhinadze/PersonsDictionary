@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonsDictionary.Domain.Cities;
 
-namespace PersonsDictionary.Persistence.Mapping
+namespace PersonsDictionary.Persistence.Cities
 {
     public static class CityMapper
     {
