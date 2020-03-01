@@ -30,18 +30,25 @@ namespace PersonsDictionary.Api.Persons.Controllers
         #region Actions
         [HttpPost]
         [ModelState]
-        public async Task<IActionResult> CreatePerson([FromBody] PersonCreateViewModel model)
-        {
-            
+        public async Task<IActionResult> Create([FromBody] PersonCreateViewModel model)
+        {            
             var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model));
 
             return CustomResult(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePerson(int id, [FromBody] PersonCreateViewModel model)
+        public async Task<IActionResult> Update(int id, [FromBody] PersonCreateViewModel model)
         {
             var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model), id);
+
+            return CustomResult(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _service.DekteAsync(id, _env.ContentRootPath);
 
             return CustomResult(result);
         }

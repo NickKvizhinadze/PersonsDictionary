@@ -30,7 +30,6 @@ namespace PersonsDictionary.Application.Persons
         #endregion
 
         #region Methods
-
         public async Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0)
         {
             var result = new Result<int>();
@@ -41,7 +40,7 @@ namespace PersonsDictionary.Application.Persons
                 if (id > 0)
                 {
                     var existingNumbers = await _uow.MobileNumbers.GetByPersonIdAsync(id);
-                   
+
                     person.Id = id;
                     person.ImageUrl = await _uow.Persons.GetImageUrlAsync(person.Id);
 
@@ -78,6 +77,41 @@ namespace PersonsDictionary.Application.Persons
             return result;
         }
 
+        public async Task<Result> DekteAsync(int id, string webRoot)
+        {
+            var result = new Result();
+            using (var transaction = await _uow.BeginTransactionAsync())
+            {
+                try
+                {
+                    var person = await _uow.Persons.GetByIdAsync(id);
+                    if (person != null)
+                    {
+                        string imageUrl = person.ImageUrl;
+                        _uow.Persons.Delete(person);
+
+                        await _uow.SaveAsync();
+                        ImageManager.DeleteImage(webRoot, imageUrl);
+                        await transaction.CommitAsync();
+                        _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person deleted successfully | Id: {id}");
+                    }
+                    else
+                    {
+                        result.AddError(ErrorMessages.PersonNotFound);
+                        await transaction.RollbackAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"{nameof(PersonsService)} => {nameof(DekteAsync)} | Person have not deleted | Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+
+                    result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
+                    await transaction.RollbackAsync();
+                }
+
+                return result;
+            }
+        }
 
         public async Task<Result<string>> UploadPhotoAsync(int id, IFormFile image, string webRootDir)
         {
@@ -104,12 +138,12 @@ namespace PersonsDictionary.Application.Persons
                 _uow.Persons.Update(person);
                 await _uow.SaveAsync();
 
-                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Photo added to person | Id: {id}");
+                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UploadPhotoAsync)} | Photo added to person | Id: {id}");
                 result.Data = imageUrl;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Photo have not added to person| Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(UploadPhotoAsync)} | Photo have not added to person| Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
                 if (!string.IsNullOrEmpty(imageUrl))
                     ImageManager.DeleteImage(imageUrl, webRootDir);
 
