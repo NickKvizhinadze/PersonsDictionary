@@ -5,8 +5,8 @@ using PersonsDictionary.Application.Common;
 
 namespace PersonsDictionary.Application.Persons
 {
-    public interface IMobileNumbersRepository : IBaseRepository<MobileNumber, int>
+    public interface IPhoneNumbersRepository : IBaseRepository<PhoneNumber, int>
     {
-        Task<List<MobileNumber>> GetByPersonIdAsync(int personId);
+        Task<List<PhoneNumber>> GetByPersonIdAsync(int personId);
     }
 }

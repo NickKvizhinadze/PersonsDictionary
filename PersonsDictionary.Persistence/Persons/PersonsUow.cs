@@ -10,19 +10,19 @@ namespace PersonsDictionary.Persistence.Persons
         public PersonsUow(
             ApplicationDbContext context,
             IPersonsRepository persons,
-            IMobileNumbersRepository mobileNumbers,
+            IPhoneNumbersRepository mobileNumbers,
             ICitiesRepository cities
             ) : base(context)
         {
             Persons = persons;
-            MobileNumbers = mobileNumbers;
+            PhoneNumbers = mobileNumbers;
             Cities = cities;
         }
         #endregion
 
         #region Properties
         public IPersonsRepository Persons { get; private set; }
-        public IMobileNumbersRepository MobileNumbers { get; private set; }
+        public IPhoneNumbersRepository PhoneNumbers { get; private set; }
         public ICitiesRepository Cities { get; private set; }
         #endregion
     }

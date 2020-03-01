@@ -19,7 +19,7 @@ namespace PersonsDictionary.Domain.Persons
         #endregion
 
         #region Navigation Properties
-        public ICollection<MobileNumber> MobileNumbers { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public City City { get; set; }
         #endregion
     }

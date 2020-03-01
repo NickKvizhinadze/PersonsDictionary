@@ -14,6 +14,6 @@ namespace PersonsDictionary.Application.Persons
         public DateTime BirthDate { get; set; }
         public int CityId { get; set; }
 
-        public List<MobileNumberDto> MobileNumbers { get; set; }
+        public List<PhoneNumberDto> PhoneNumbers { get; set; }
     }
 }

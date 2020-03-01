@@ -33,6 +33,6 @@ namespace PersonsDictionary.Api.Persons.Models
         [Required(ErrorMessageResourceType = typeof(ErrorMessages), ErrorMessageResourceName = nameof(ErrorMessages.Required))]
         public int CityId { get; set; }
 
-        public List<MobileNumberViewModel> MobileNumbers { get; set; }
+        public List<PhoneNumberViewModel> PhoneNumbers { get; set; }
     }
 }

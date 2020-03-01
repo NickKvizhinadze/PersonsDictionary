@@ -14,7 +14,7 @@ namespace PersonsDictionary.Persistence
         public static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddTransient<IPersonsRepository, PersonsRepository>();
-            services.AddTransient<IMobileNumbersRepository, MobileNumbersRepository>();
+            services.AddTransient<IPhoneNumbersRepository, PhoneNumbersRepository>();
             services.AddTransient<ICitiesRepository, CitiesRepository>();
         }
 

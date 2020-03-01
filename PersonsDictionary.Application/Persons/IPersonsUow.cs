@@ -6,7 +6,7 @@ namespace PersonsDictionary.Application.Persons
     public interface IPersonsUow : IBaseUow
     {
         IPersonsRepository Persons { get; }
-        IMobileNumbersRepository MobileNumbers { get; }
+        IPhoneNumbersRepository PhoneNumbers { get; }
         ICitiesRepository Cities { get; }
     }
 }

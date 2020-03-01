@@ -39,24 +39,24 @@ namespace PersonsDictionary.Application.Persons
 
                 if (id > 0)
                 {
-                    var existingNumbers = await _uow.MobileNumbers.GetByPersonIdAsync(id);
+                    var existingNumbers = await _uow.PhoneNumbers.GetByPersonIdAsync(id);
 
                     person.Id = id;
                     person.ImageUrl = await _uow.Persons.GetImageUrlAsync(person.Id);
 
-                    if (person.MobileNumbers?.Any() == true)
+                    if (person.PhoneNumbers?.Any() == true)
                     {
-                        var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.MobileNumbers.All(n => n.Id != en.Id));
+                        var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.PhoneNumbers.All(n => n.Id != en.Id));
                         if (numbersToDelete.Any())
-                            _uow.MobileNumbers.DeleteRange(numbersToDelete);
+                            _uow.PhoneNumbers.DeleteRange(numbersToDelete);
 
-                        var numbersToUpdate = person.MobileNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
+                        var numbersToUpdate = person.PhoneNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
                         if (numbersToUpdate.Any())
-                            _uow.MobileNumbers.UpdateRange(numbersToUpdate);
+                            _uow.PhoneNumbers.UpdateRange(numbersToUpdate);
 
-                        var numbersToAdd = person.MobileNumbers.Where(n => n.Id == 0);
+                        var numbersToAdd = person.PhoneNumbers.Where(n => n.Id == 0);
                         if (numbersToAdd.Any())
-                            _uow.MobileNumbers.AddRange(numbersToAdd);
+                            _uow.PhoneNumbers.AddRange(numbersToAdd);
                     }
 
                     _uow.Persons.Update(person);

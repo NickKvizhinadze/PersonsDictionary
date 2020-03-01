@@ -8,7 +8,7 @@ namespace PersonsDictionary.Application.Persons
         public PersonProfile()
         {
             CreateMap<PersonCreateRequest, Person>();                
-            CreateMap<MobileNumberDto, MobileNumber>();
+            CreateMap<PhoneNumberDto, PhoneNumber>();
         }
     }
 }

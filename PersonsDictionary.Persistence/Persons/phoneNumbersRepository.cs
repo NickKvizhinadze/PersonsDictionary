@@ -8,16 +8,16 @@ using PersonsDictionary.Persistence.Repositories;
 
 namespace PersonsDictionary.Persistence.Persons
 {
-    public class MobileNumbersRepository : BaseRepository<MobileNumber, int>, IMobileNumbersRepository
+    public class PhoneNumbersRepository : BaseRepository<PhoneNumber, int>, IPhoneNumbersRepository
     {
         #region Constructor
-        public MobileNumbersRepository(ApplicationDbContext context) : base(context)
+        public PhoneNumbersRepository(ApplicationDbContext context) : base(context)
         {
         }
         #endregion
 
         #region Methods
-        public Task<List<MobileNumber>> GetByPersonIdAsync(int personId)
+        public Task<List<PhoneNumber>> GetByPersonIdAsync(int personId)
         {
             return TableNoTracking.Where(n => n.PersonId == personId).ToListAsync();
         }
