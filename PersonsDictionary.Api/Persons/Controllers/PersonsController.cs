@@ -32,6 +32,7 @@ namespace PersonsDictionary.Api.Persons.Controllers
         [ModelState]
         public async Task<IActionResult> CreatePerson([FromBody] PersonCreateViewModel model)
         {
+            
             var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model));
 
             return CustomResult(result);

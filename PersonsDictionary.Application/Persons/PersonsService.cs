@@ -13,10 +13,6 @@ namespace PersonsDictionary.Application.Persons
 {
     public class PersonsService : IPersonsService
     {
-        #region Constants
-        private const string Dir = "persons";
-        #endregion
-
         #region Fields
         private readonly IPersonsUow _uow;
         private readonly IMapper _mapper;
@@ -83,7 +79,7 @@ namespace PersonsDictionary.Application.Persons
                     return result;
                 }
 
-                imageUrl = await ImageManager.UploadImageAsync(image, webRootDir, Dir);
+                imageUrl = await ImageManager.UploadImageAsync(image, webRootDir);
 
                 person.ImageUrl = imageUrl;
                 _uow.Persons.Update(person);
@@ -96,7 +92,7 @@ namespace PersonsDictionary.Application.Persons
             {
                 _logger.LogError($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Photo have not added to person| Id: {id} | ex: {ex.ToString()} | trace: {ex.StackTrace.ToString()}");
                 if (!string.IsNullOrEmpty(imageUrl))
-                    ImageManager.DeleteImage(imageUrl, webRootDir, Dir);
+                    ImageManager.DeleteImage(imageUrl, webRootDir);
 
                 result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
             }

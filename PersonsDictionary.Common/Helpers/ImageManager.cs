@@ -16,41 +16,32 @@ namespace PersonsDictionary.Common.Helpers
         private static List<string> _forbidden = new List<string> { " ", "!", "*", "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]" };
         #endregion
 
-        public static async Task<string> UploadImageAsync(IFormFile file, string webRoot, string dir)
+        public static async Task<string> UploadImageAsync(IFormFile file, string webRoot)
         {
-            try
+            string imageUrl = "";
+
+            if (file?.Length > 0 &&
+                (file.ContentType == "image/jpg" || file.ContentType == "image/jpeg" || file.ContentType == "image/png" || file.ContentType == "image/gif"))
             {
+                var fileName = GenerateFileName(file);
+                var (path, image) = GeneratePath(webRoot, fileName);
+                imageUrl = image;
 
-                string imageUrl = "";
-
-                if (file?.Length > 0 &&
-                    (file.ContentType == "image/jpg" || file.ContentType == "image/jpeg" || file.ContentType == "image/png" || file.ContentType == "image/gif"))
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    var fileName = GenerateFileName(file);
-                    var (path, image) = GeneratePath(webRoot, fileName, dir);
-                    imageUrl = image;
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
+                    await file.CopyToAsync(stream);
                 }
-
-                return imageUrl;
             }
-            catch (Exception ex)
-            {
 
-                throw;
-            }
+            return imageUrl;
         }
 
-        public static void DeleteImage(string webRoot, string image, string dir)
+        public static void DeleteImage(string webRoot, string image)
         {
             if (!string.IsNullOrWhiteSpace(image))
             {
                 var fileName = image.Split('/').Last();
-                var path = Path.Combine(webRoot + ContentFolder + dir + "/", fileName);
+                var path = Path.Combine(webRoot + ContentFolder + "/", fileName);
                 if (File.Exists(path))
                 {
                     File.Delete(path);
@@ -72,15 +63,15 @@ namespace PersonsDictionary.Common.Helpers
             return fileName;
         }
 
-        private static (string path, string imageUrl) GeneratePath(string webRoot, string fileName, string dir)
+        private static (string path, string imageUrl) GeneratePath(string webRoot, string fileName)
         {
             var random = DateTime.Now.ToString("yyyyMMddTHHmmss") + "-" + fileName;
 
-            string dirPath = webRoot + ContentFolder + dir + " /";
+            string dirPath = webRoot + ContentFolder;
             CheckOrCreateDirectory(dirPath);
 
             var path = Path.Combine(dirPath, random);
-            var imageUrl = "/images/" + dir + "/" + random;
+            var imageUrl = "/images/" + random;
             return (path, imageUrl);
         }
 
