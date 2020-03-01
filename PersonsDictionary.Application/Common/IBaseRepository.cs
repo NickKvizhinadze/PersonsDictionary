@@ -11,19 +11,17 @@ namespace PersonsDictionary.Application.Common
 
         #region Methods
         T GetById(K id);
-
         Task<T> GetByIdAsync(K id);
 
-        void Add(T entity);
-        
+        void Add(T entity);        
         void AddRange(IEnumerable<T> entities);
 
         void Update(T entity);
+        void UpdateRange(IEnumerable<T> entities);
 
-        void Delete(T entity);
-        
+        void Delete(T entity);        
         void DeleteRange(IEnumerable<T> entities);
-        
+
         #endregion
     }
 }

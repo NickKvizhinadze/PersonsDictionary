@@ -15,6 +15,8 @@ namespace PersonsDictionary.Persistence.Mapping
             modelBuilder.Entity<Person>().Property(e => e.Gender).IsRequired();
             modelBuilder.Entity<Person>().Property(e => e.BirthDate).IsRequired();
             modelBuilder.Entity<Person>().Property(e => e.CityId).IsRequired();
+            modelBuilder.Entity<Person>().HasOne(e => e.City).WithMany(e => e.Persons);
+            modelBuilder.Entity<Person>().HasMany(e => e.MobileNumbers).WithOne(e => e.Person).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

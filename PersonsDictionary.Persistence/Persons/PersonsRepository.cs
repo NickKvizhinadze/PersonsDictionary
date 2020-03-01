@@ -14,7 +14,10 @@ namespace PersonsDictionary.Persistence.Persons
         }
 
         #region Methods
-        public Task<string> GetImageUrlAsync(int id) 
+        public override Task<Person> GetByIdAsync(int id) 
+            => TableNoTracking.Include(p => p.City).Include(p => p.MobileNumbers).FirstOrDefaultAsync();
+
+        public Task<string> GetImageUrlAsync(int id)
             => TableNoTracking.Where(p => p.Id == id).Select(p => p.ImageUrl).FirstOrDefaultAsync();
         #endregion
     }

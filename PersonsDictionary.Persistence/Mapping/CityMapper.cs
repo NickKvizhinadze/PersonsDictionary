@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonsDictionary.Domain.Persons;
+using PersonsDictionary.Domain.Cities;
 
 namespace PersonsDictionary.Persistence.Mapping
 {

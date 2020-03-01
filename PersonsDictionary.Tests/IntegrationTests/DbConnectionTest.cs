@@ -3,6 +3,7 @@ using System.Linq;
 using Xunit;
 using FluentAssertions;
 using PersonsDictionary.Persistence;
+using PersonsDictionary.Domain.Persons;
 
 namespace PersonsDictionary.Tests.Integration
 {
@@ -20,7 +21,8 @@ namespace PersonsDictionary.Tests.Integration
             {
                 using (var context = new ApplicationDbContext(ConnectionString))
                 {
-                    var persons = context.Persons.ToList();
+                    var dbSet = context.Set<Person>();
+                    var persons = dbSet.ToList();
                 }
             };
 

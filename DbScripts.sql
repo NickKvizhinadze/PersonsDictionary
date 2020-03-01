@@ -24,3 +24,15 @@ GO
 ALTER TABLE PersonsDictionary.dbo.Persons
   ADD CONSTRAINT FK_Persons_CityId FOREIGN KEY (CityId) REFERENCES dbo.Cities (Id)
 GO
+
+CREATE TABLE PersonsDictionary.dbo.MobileNumbers (
+  Id int IDENTITY,
+  PersonId int NOT NULL,
+  Value nvarchar(20) NOT NULL
+)
+ON [PRIMARY]
+GO
+
+ALTER TABLE PersonsDictionary.dbo.MobileNumbers
+  ADD CONSTRAINT FK_MobileNumbers_PersonId FOREIGN KEY (PersonId) REFERENCES dbo.Persons (Id) ON DELETE CASCADE
+GO

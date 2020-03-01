@@ -37,6 +37,7 @@ namespace PersonsDictionary.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             PersonMapper.Map(modelBuilder);
+            MobileNumberMapper.Map(modelBuilder);
             CityMapper.Map(modelBuilder);
 
             base.OnModelCreating(modelBuilder);

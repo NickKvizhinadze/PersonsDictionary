@@ -1,4 +1,4 @@
-﻿using PersonsDictionary.Domain.Persons;
+﻿using PersonsDictionary.Domain.Cities;
 using PersonsDictionary.Application.Common;
 
 namespace PersonsDictionary.Application.Cities

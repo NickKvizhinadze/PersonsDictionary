@@ -55,43 +55,49 @@ namespace PersonsDictionary.Persistence.Repositories
 
         #region Methods
 
-        public T GetById(K id)
+        public virtual T GetById(K id)
         {
             return Entities.Find(id);
         }
 
-        public async Task<T> GetByIdAsync(K id)
+        public virtual async Task<T> GetByIdAsync(K id)
         {
             return await Entities.FindAsync(id);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             entity.ThrowIfArgumentNull(nameof(entity));
 
             Entities.Add(entity);
         }
 
-        public void AddRange(IEnumerable<T> entities)
+        public virtual void AddRange(IEnumerable<T> entities)
         {
             entities.ThrowIfArgumentNull(nameof(entities));
 
             _context.AddRange(entities);
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(T entity)
+        public virtual void UpdateRange(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+                _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void Delete(T entity)
         {
             entity.ThrowIfArgumentNull(nameof(entity));
 
             Entities.Remove(entity);
         }
 
-        public void DeleteRange(IEnumerable<T> entities)
+        public virtual void DeleteRange(IEnumerable<T> entities)
         {
             entities.ThrowIfArgumentNull(nameof(entities));
 

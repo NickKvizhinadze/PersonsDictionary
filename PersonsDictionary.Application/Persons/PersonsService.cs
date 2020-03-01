@@ -8,6 +8,7 @@ using PersonsDictionary.Common.Models;
 using PersonsDictionary.Domain.Persons;
 using PersonsDictionary.Localization;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace PersonsDictionary.Application.Persons
 {
@@ -39,8 +40,26 @@ namespace PersonsDictionary.Application.Persons
 
                 if (id > 0)
                 {
+                    var existingNumbers = await _uow.MobileNumbers.GetByPersonIdAsync(id);
+                   
                     person.Id = id;
-                    person.ImageUrl = await _uow.Persons.GetImageUrlAsync(id);
+                    person.ImageUrl = await _uow.Persons.GetImageUrlAsync(person.Id);
+
+                    if (person.MobileNumbers?.Any() == true)
+                    {
+                        var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.MobileNumbers.All(n => n.Id != en.Id));
+                        if (numbersToDelete.Any())
+                            _uow.MobileNumbers.DeleteRange(numbersToDelete);
+
+                        var numbersToUpdate = person.MobileNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
+                        if (numbersToUpdate.Any())
+                            _uow.MobileNumbers.UpdateRange(numbersToUpdate);
+
+                        var numbersToAdd = person.MobileNumbers.Where(n => n.Id == 0);
+                        if (numbersToAdd.Any())
+                            _uow.MobileNumbers.AddRange(numbersToAdd);
+                    }
+
                     _uow.Persons.Update(person);
                 }
                 else

@@ -1,4 +1,4 @@
-﻿using PersonsDictionary.Domain.Persons;
+﻿using PersonsDictionary.Domain.Cities;
 using PersonsDictionary.Application.Cities;
 using PersonsDictionary.Persistence.Repositories;
 

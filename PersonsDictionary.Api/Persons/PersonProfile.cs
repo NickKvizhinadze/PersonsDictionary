@@ -9,6 +9,7 @@ namespace PersonsDictionary.Api.Persons
         public PersonProfile()
         {
             CreateMap<PersonCreateViewModel, PersonCreateRequest>();
+            CreateMap<MobileNumberViewModel, MobileNumberDto>();
         }
     }
 }

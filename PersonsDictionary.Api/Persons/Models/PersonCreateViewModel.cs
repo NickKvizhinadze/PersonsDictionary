@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 using PersonsDictionary.Api.Attributes;
 using PersonsDictionary.Domain.Enums;
 using PersonsDictionary.Localization;
@@ -32,5 +32,7 @@ namespace PersonsDictionary.Api.Persons.Models
 
         [Required(ErrorMessageResourceType = typeof(ErrorMessages), ErrorMessageResourceName = nameof(ErrorMessages.Required))]
         public int CityId { get; set; }
+
+        public List<MobileNumberViewModel> MobileNumbers { get; set; }
     }
 }
