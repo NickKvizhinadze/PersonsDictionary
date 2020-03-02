@@ -33,14 +33,24 @@ namespace PersonsDictionary.Application.Persons
         #endregion
 
         #region Methods
-        public async Task<PersonsListDto> GetAll(string searchValue, Paging paging)
+        public async Task<ListResult<PersonDto>> GetAllAsync(string searchValue, Paging paging)
         {
             var (persons, totalCount) = await _uow.Persons.GetAllAsync(searchValue, paging);
             paging.TotalCount = totalCount;
 
             var result = _mapper.Map<List<PersonDto>>(persons);
 
-            return new PersonsListDto(result, paging);
+            return new ListResult<PersonDto>(result, paging);
+        }
+
+        public async Task<ListResult<PersonDto>> GetAllAsync(PersonFilter filter, Paging paging)
+        {
+            var (persons, totalCount) = await _uow.Persons.GetAllAsync(filter, paging);
+            paging.TotalCount = totalCount;
+
+            var result = _mapper.Map<List<PersonDto>>(persons);
+
+            return new ListResult<PersonDto>(result, paging);
         }
 
         public async Task<PersonDto> GetByIdAsync(int id)

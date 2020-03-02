@@ -34,9 +34,16 @@ namespace PersonsDictionary.Api.Persons.Controllers
 
         #region Actions
         [HttpGet]
-        public async Task<ActionResult<PersonsListDto>> GetAll(string searchValue, int page = 1)
+        public async Task<ActionResult<ListResult<PersonDto>>> GetAll(string searchValue, int page = 1)
         {
-            var result = await _service.GetAll(searchValue, new Paging(page, _settings.PerPage));
+            var result = await _service.GetAllAsync(searchValue, new Paging(page, _settings.PerPage));
+            return Ok(result);
+        }
+
+        [HttpGet("Filter")]
+        public async Task<ActionResult<ListResult<PersonDto, PersonFilter>>> GetAll(PersonFilter filter, int page = 1)
+        {
+            var result = await _service.GetAllAsync(filter, new Paging(page, _settings.PerPage));
             return Ok(result);
         }
 

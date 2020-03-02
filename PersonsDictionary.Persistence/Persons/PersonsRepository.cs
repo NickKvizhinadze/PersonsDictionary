@@ -8,6 +8,8 @@ using PersonsDictionary.Domain.Persons;
 using PersonsDictionary.Common.Extensions;
 using PersonsDictionary.Persistence.Repositories;
 using PersonsDictionary.Application.Persons.Abstractions;
+using PersonsDictionary.Application.Persons.Models;
+using DynamicFilter.Helpers;
 
 namespace PersonsDictionary.Persistence.Persons
 {
@@ -30,6 +32,22 @@ namespace PersonsDictionary.Persistence.Persons
 
             var totalCount = await query.CountAsync();
 
+
+            var result = await query
+                       .Skip((paging.CurrentPage - 1) * paging.PerPage)
+                       .Take(paging.PerPage)
+                       .ToListAsync();
+
+            return (result, totalCount);
+        }
+
+        public async Task<(List<Person> persons, int totalCount)> GetAllAsync(PersonFilter filter, Paging paging)
+        {
+            var query = GetWithIncludes();
+            //Filter persons query
+            query = FilterHelper.Filter(filter, query);
+
+            var totalCount = await query.CountAsync();
 
             var result = await query
                        .Skip((paging.CurrentPage - 1) * paging.PerPage)

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DynamicFilter\DynamicFilter.csproj" />
     <ProjectReference Include="..\PersonsDictionary.Common\PersonsDictionary.Common.csproj" />
     <ProjectReference Include="..\PersonsDictionary.Domain\PersonsDictionary.Domain.csproj" />
   </ItemGroup>

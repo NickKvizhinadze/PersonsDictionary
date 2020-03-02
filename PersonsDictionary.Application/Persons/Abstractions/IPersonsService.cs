@@ -7,7 +7,8 @@ namespace PersonsDictionary.Application.Persons.Abstractions
 {
     public interface IPersonsService
     {
-        Task<PersonsListDto> GetAll(string searchValue, Paging paging);
+        Task<ListResult<PersonDto>> GetAllAsync(string searchValue, Paging paging);
+        Task<ListResult<PersonDto>> GetAllAsync(PersonFilter filter, Paging paging);
         Task<PersonDto> GetByIdAsync(int id);
         Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0);
         Task<Result> DeleteAsync(int id, string webRoot);
