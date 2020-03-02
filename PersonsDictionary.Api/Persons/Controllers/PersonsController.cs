@@ -8,6 +8,8 @@ using PersonsDictionary.Api.Controllers;
 using PersonsDictionary.Api.Persons.Models;
 using PersonsDictionary.Application.Persons.Models;
 using PersonsDictionary.Application.Persons.Abstractions;
+using PersonsDictionary.Common.Models;
+using Microsoft.Extensions.Options;
 
 namespace PersonsDictionary.Api.Persons.Controllers
 {
@@ -16,19 +18,29 @@ namespace PersonsDictionary.Api.Persons.Controllers
         #region Fields
         private readonly IPersonsService _service;
         private readonly IMapper _mapper;
+        private readonly AppSettings _settings;
         private readonly IWebHostEnvironment _env;
         #endregion
 
         #region Constructor
-        public PersonsController(IPersonsService service, IMapper mapper, IWebHostEnvironment env)
+        public PersonsController(IPersonsService service, IMapper mapper, IOptions<AppSettings> options, IWebHostEnvironment env)
         {
             _service = service;
             _mapper = mapper;
+            _settings = options.Value;
             _env = env;
         }
         #endregion
 
         #region Actions
+        [HttpGet]
+        public async Task<ActionResult<PersonsListDto>> GetAll(string searchValue, int page = 1)
+        {
+            var result = await _service.GetAll(searchValue, new Paging(page, _settings.PerPage));
+            return Ok(result);
+        }
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<PersonDto>> Get(int id)
         {
@@ -36,6 +48,7 @@ namespace PersonsDictionary.Api.Persons.Controllers
 
             return Ok(result);
         }
+
         [HttpPost]
         [ModelState]
         public async Task<ActionResult<int>> Create([FromBody] PersonCreateViewModel model)

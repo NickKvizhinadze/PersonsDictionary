@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PersonsDictionary.Application;
+using PersonsDictionary.Common.Models;
 using PersonsDictionary.Persistence;
 
 namespace PersonsDictionary.Api
@@ -39,6 +40,8 @@ namespace PersonsDictionary.Api
                     .AllowAnyOrigin()
                     .AllowCredentials();
                 }));
+
+            services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.AddSingleton(Configuration);
             services.AddAutoMapper();
 
