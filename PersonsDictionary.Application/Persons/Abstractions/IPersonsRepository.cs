@@ -12,5 +12,6 @@ namespace PersonsDictionary.Application.Persons.Abstractions
         Task<string> GetImageUrlAsync(int id);
         Task<(List<Person> persons, int totalCount)> GetAllAsync(string searchValue, Paging paging);
         Task<(List<Person> persons, int totalCount)> GetAllAsync(PersonFilter filter, Paging paging);
+        Task<List<KeyValuePair<int, string>>> GetPersonsCollectionAsync();
     }
 }

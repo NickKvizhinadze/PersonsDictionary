@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace PersonsDictionary.Common.Extensions
 {
@@ -24,6 +25,15 @@ namespace PersonsDictionary.Common.Extensions
                 result = value.ToString();
 
             return result;
+        }
+
+        public static List<KeyValuePair<int, string>> ToCollection<T>(this Type source) where T : Enum
+        {
+            return Enum.GetValues(source).Cast<T>()
+                .Select(r => 
+                    new KeyValuePair<int, string>(Convert.ToInt32(r), r.GetDisplayName())
+                    )
+                .ToList();
         }
     }
 }

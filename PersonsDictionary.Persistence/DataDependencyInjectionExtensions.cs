@@ -5,8 +5,10 @@ using PersonsDictionary.Persistence.Cities;
 using PersonsDictionary.Persistence.Common;
 using PersonsDictionary.Persistence.Persons;
 using PersonsDictionary.Persistence.Reports;
+using PersonsDictionary.Persistence.Collections;
 using PersonsDictionary.Application.Persons.Abstractions;
 using PersonsDictionary.Application.Reports.Abstractions;
+using PersonsDictionary.Application.Collections.Abstractions;
 
 namespace PersonsDictionary.Persistence
 {
@@ -26,6 +28,7 @@ namespace PersonsDictionary.Persistence
             services.AddTransient<IBaseUow, BaseUow>();
             services.AddTransient<IPersonsUow, PersonsUow>();
             services.AddTransient<IReportsUow, ReportsUow>();
+            services.AddTransient<ICollectionsUow, CollectionsUow>();
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PersonsDictionary.Common.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 
-namespace PersonsDictionary.Api.Controllers
+namespace PersonsDictionary.Api.Common
 {
     [Route("api/[controller]")]
     public abstract class BaseApiController : ControllerBase

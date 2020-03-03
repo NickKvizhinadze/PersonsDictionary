@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using PersonsDictionary.Api.Controllers;
+using PersonsDictionary.Api.Common;
 using PersonsDictionary.Application.Reports.Abstractions;
 using PersonsDictionary.Application.Reports.Models.Dtos;
 

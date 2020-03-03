@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PersonsDictionary.Api.Attributes;
-using PersonsDictionary.Api.Controllers;
+using PersonsDictionary.Api.Common;
 using PersonsDictionary.Api.Persons.Models;
 using PersonsDictionary.Application.Persons.Models;
 using PersonsDictionary.Application.Persons.Abstractions;

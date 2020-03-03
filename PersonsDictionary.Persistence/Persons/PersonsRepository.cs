@@ -62,6 +62,9 @@ namespace PersonsDictionary.Persistence.Persons
 
         public Task<string> GetImageUrlAsync(int id)
             => TableNoTracking.Where(p => p.Id == id).Select(p => p.ImageUrl).FirstOrDefaultAsync();
+
+        public Task<List<KeyValuePair<int, string>>> GetPersonsCollectionAsync() 
+            => TableNoTracking.Select(p => new KeyValuePair<int,string>(p.Id, $"{p.FirstName} {p.LastName}")).ToListAsync();
         #endregion
 
         #region Private Methods
