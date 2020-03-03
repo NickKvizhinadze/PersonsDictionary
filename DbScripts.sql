@@ -57,7 +57,7 @@ GO
 
 CREATE VIEW [dbo].[vGetPersonsRelationsCountByType]
 AS
-SELECT        p.Id, p.FirstName, p.LastName, p.PersonalId, r.Type, COUNT(r.Id) AS Expr1
+SELECT        p.Id AS PersonId, p.FirstName, p.LastName, p.PersonalId, r.Type, COUNT(r.Id) AS Count
 FROM            dbo.Persons AS p INNER JOIN
                          dbo.PersonRelations AS r ON r.PersonId = p.Id
 GROUP BY r.Type, p.Id, p.FirstName, p.LastName, p.PersonalId

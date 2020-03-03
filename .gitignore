@@ -354,4 +354,4 @@ MigrationBackup/
 
 
 #custom ignores
-PersonsDictionary.Api/wwwroot/images/*
+PersonsDictionary.Api/wwwroot/*

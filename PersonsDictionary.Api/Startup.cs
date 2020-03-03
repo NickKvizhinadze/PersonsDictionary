@@ -42,6 +42,8 @@ namespace PersonsDictionary.Api
                 }));
 
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
+            services.Configure<ConnectionStrings>(Configuration.GetSection(nameof(ConnectionStrings)));
+            
             services.AddSingleton(Configuration);
             services.AddAutoMapper();
 

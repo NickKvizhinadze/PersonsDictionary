@@ -26,8 +26,7 @@ namespace PersonsDictionary.Application.Persons
                 .ForMember(dest => dest.Gender, opt => opt.ResolveUsing(src => src.RelatedPerson?.Gender.GetDisplayName()))
                 .ForMember(dest => dest.BirthDate, opt => opt.ResolveUsing(src => src.RelatedPerson?.BirthDate))
                 .ForMember(dest => dest.CityId, opt => opt.ResolveUsing(src => src.RelatedPerson?.CityId))
-                .ForMember(dest => dest.CityName, opt => opt.ResolveUsing(src => src.RelatedPerson?.City?.Name))
-                ;
+                .ForMember(dest => dest.CityName, opt => opt.ResolveUsing(src => src.RelatedPerson?.City?.Name));
         }
     }
 }
