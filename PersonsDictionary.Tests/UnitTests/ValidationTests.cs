@@ -12,36 +12,24 @@ namespace PersonsDictionary.Tests.UnitTests
     public class ValidationTests
     {
         #region Tests
-        [Fact]
-        public void Only_English_Letters_Should_Return_True()
+        [Theory]
+        [InlineData("nick", true)]
+        [InlineData("nickა", false)]
+        [InlineData("nick1", false)]
+        public void Only_English_Letters_Should_Return_True(string name, bool result)
         {
-            string name = "nick";
-            var result = name.IsWithEnglishLetters();
-            result.Should().BeTrue();
+            var checkResult = name.IsWithEnglishLetters();
+            result.Should().Be(checkResult);
         }
 
-        [Fact]
-        public void English_Letters_With_Georgian_Should_Return_False()
+        [Theory]
+        [InlineData("ნიკა", true)]
+        [InlineData("ნიკაn", false)]
+        [InlineData("ნიკა1", false)]
+        public void Only_Georgian_Letters_Should_Return_True(string name, bool result)
         {
-            string name = "nickა";
-            var result = name.IsWithEnglishLetters();
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void Only_Georgian_Letters_Should_Return_True()
-        {
-            string name = "ნიკა";
-            var result = name.IsWithGeorgianLetters();
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Georgian_Letters_With_English_Should_Return_False()
-        {
-            string name = "ნიკაn";
-            var result = name.IsWithGeorgianLetters();
-            result.Should().BeFalse();
+            var checkResult = name.IsWithGeorgianLetters();
+            result.Should().Be(checkResult);
         }
         #endregion
     }
