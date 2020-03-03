@@ -10,10 +10,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Update="Models.Designer.cs">
+    <Compile Update="Models - Copy.Designer.cs">
+      <DependentUpon>Models.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Models.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

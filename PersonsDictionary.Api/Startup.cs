@@ -16,6 +16,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PersonsDictionary.Api.Middlewares;
 using PersonsDictionary.Application;
 using PersonsDictionary.Common.Models;
 using PersonsDictionary.Persistence;
@@ -67,6 +68,9 @@ namespace PersonsDictionary.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseGlobalExceptionHandler();
+            app.UseCultureFromHeader();
 
             app.UseRouting();
 
