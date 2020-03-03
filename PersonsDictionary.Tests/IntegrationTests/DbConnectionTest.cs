@@ -10,7 +10,7 @@ namespace PersonsDictionary.Tests.Integration
     public class DbConnectionTest
     {
         #region Constants
-        private const string ConnectionString = @"Server=KVIZHINADZE;Database=PersonsDictionary;Trusted_Connection=True;";
+        private const string ConnectionString = @"Server=den1.mssql8.gear.host;Database=personsdict;User Id=personsdict;Password=Bb4G73u6_vG~;";
         #endregion
 
         #region Tests
