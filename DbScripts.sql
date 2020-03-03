@@ -54,3 +54,11 @@ GO
 ALTER TABLE PersonsDictionary.dbo.PersonRelations
   ADD CONSTRAINT FK_PersonRelations_RelatedPersonId FOREIGN KEY (RelatedPersonId) REFERENCES dbo.Persons (Id)
 GO
+
+CREATE VIEW [dbo].[vGetPersonsRelationsCountByType]
+AS
+SELECT        p.Id, p.FirstName, p.LastName, p.PersonalId, r.Type, COUNT(r.Id) AS Expr1
+FROM            dbo.Persons AS p INNER JOIN
+                         dbo.PersonRelations AS r ON r.PersonId = p.Id
+GROUP BY r.Type, p.Id, p.FirstName, p.LastName, p.PersonalId
+GO
