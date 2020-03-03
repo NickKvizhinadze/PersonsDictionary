@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "360efbdb-f9f8-4205-97ab-65251df3eff6",
+		"name": "PersonsDictionary",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PersonCreate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"firstname\",\n\t\"lastName\": \"lastname\",\n\t\"personalId\": \"00000000002\",\n\t\"gender\": 1,\n\t\"birthDate\": \"1992-03-06\",\n\t\"cityId\": 1,\n\t\"phoneNumbers\": [\n\t\t{\n\t\t\t\"id\": 0,\n\t\t\t\"personId\": 1,\n\t\t\t\"value\":\"111111111\"\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44394/api/Persons",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Nick\",\n\t\"lastName\": \"Kvizhinadze\",\n\t\"personalId\": \"00000000001\",\n\t\"gender\": 0,\n\t\"birthDate\": \"1992-03-06\",\n\t\"cityId\": 1,\n\t\"phoneNumbers\": [\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"personId\": 1,\n\t\t\t\"type\": 0,\n\t\t\t\"value\":\"555555555\"\n\t\t},\n\t\t{\n\t\t\t\"id\": 0,\n\t\t\t\"personId\": 1,\n\t\t\t\"type\": 1,\n\t\t\t\"value\":\"444444444\"\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonUploadPhoto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/nickk/Google Drive/Wallpapers/batman.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/UploadPhoto/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"UploadPhoto",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonRelationAdd",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"relatedPersonId\": 4,\r\n  \"type\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/Relatation/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"Relatation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonRelationDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/Relatation/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"Relatation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonGetById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Persons/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonGetAllFastFilter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Persons?searchValue=kvizh&page=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons"
+					],
+					"query": [
+						{
+							"key": "searchValue",
+							"value": "kvizh"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PersonGetAllAdvanceFilter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Persons?FirstName=nic&LastName=kvizh&PersonalId=0001&Gender=0&CityId=1&page=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Persons"
+					],
+					"query": [
+						{
+							"key": "FirstName",
+							"value": "nic"
+						},
+						{
+							"key": "LastName",
+							"value": "kvizh"
+						},
+						{
+							"key": "PersonalId",
+							"value": "0001"
+						},
+						{
+							"key": "Gender",
+							"value": "0"
+						},
+						{
+							"key": "CityId",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReportPersonsRelationsCountByType",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Reports/GetPersonsRelationsCountByType",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Reports",
+						"GetPersonsRelationsCountByType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionsPersons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Collections/Persons",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Collections",
+						"Persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionsGenders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Collections/Genders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Collections",
+						"Genders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionsPhoneNumberTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Collections/PhoneNumberTypes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Collections",
+						"PhoneNumberTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CollectionsPersonRelationTypes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44394/api/Collections/PersonRelationTypes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44394",
+					"path": [
+						"api",
+						"Collections",
+						"PersonRelationTypes"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
