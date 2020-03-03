@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItmes", "SolutionItmes", "{8D6274AA-9F27-47E1-A3B0-79E671FE39E3}"
 	ProjectSection(SolutionItems) = preProject
 		DbScripts.sql = DbScripts.sql
+		PersonsDictionary.bak = PersonsDictionary.bak
 		PersonsDictionary.postman_collection.json = PersonsDictionary.postman_collection.json
 	EndProjectSection
 EndProject
