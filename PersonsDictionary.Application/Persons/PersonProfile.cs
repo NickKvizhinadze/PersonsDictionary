@@ -11,6 +11,7 @@ namespace PersonsDictionary.Application.Persons
         {
             CreateMap<PersonCreateRequest, Person>();
             CreateMap<PhoneNumberDto, PhoneNumber>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ReverseMap();
             CreateMap<Person, PersonDto>()
                 .ForMember(dest => dest.CityName, opt => opt.ResolveUsing(src => src.City?.Name))
@@ -19,13 +20,13 @@ namespace PersonsDictionary.Application.Persons
 
             CreateMap<PersonRelation, RelatedPersonDto>()
                 .ForMember(dest => dest.Type, opt => opt.ResolveUsing(src => src.Type.GetDisplayName()))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RelatedPersonId))
+                .ForMember(dest => dest.Id, opt => opt.ResolveUsing(src => src.RelatedPerson?.Id ?? 0))
                 .ForMember(dest => dest.FirstName, opt => opt.ResolveUsing(src => src.RelatedPerson?.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.ResolveUsing(src => src.RelatedPerson?.LastName))
                 .ForMember(dest => dest.PersonalId, opt => opt.ResolveUsing(src => src.RelatedPerson?.PersonalId))
                 .ForMember(dest => dest.Gender, opt => opt.ResolveUsing(src => src.RelatedPerson?.Gender.GetDisplayName()))
                 .ForMember(dest => dest.BirthDate, opt => opt.ResolveUsing(src => src.RelatedPerson?.BirthDate))
-                .ForMember(dest => dest.CityId, opt => opt.ResolveUsing(src => src.RelatedPerson?.CityId))
+                .ForMember(dest => dest.CityId, opt => opt.ResolveUsing(src => src.RelatedPerson?.City?.Id ?? 0))
                 .ForMember(dest => dest.CityName, opt => opt.ResolveUsing(src => src.RelatedPerson?.City?.Name));
         }
     }

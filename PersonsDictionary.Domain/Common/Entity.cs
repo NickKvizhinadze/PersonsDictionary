@@ -1,9 +1,23 @@
-﻿namespace PersonsDictionary.Domain.Common
+﻿using System;
+
+namespace PersonsDictionary.Domain.Common
 {
     public class Entity
     {
+
+        #region Constructor
+        protected Entity()
+        {
+        }
+
+        protected Entity(int id)
+        {
+            Id = id;
+        }
+        #endregion
+
         #region Properties
-        public virtual int Id { get; set; }
+        public virtual int Id { get; }
         #endregion
 
         #region Methods
@@ -15,7 +29,7 @@
             if (ReferenceEquals(this, other))
                 return true;
 
-            if (GetType() != other.GetType())
+            if (GetRealType() != other.GetRealType())
                 return false;
 
             if (Id == 0 || other.Id == 0)
@@ -42,7 +56,19 @@
 
         public override int GetHashCode()
         {
-            return (GetType().ToString() + Id).GetHashCode();
+            return (GetRealType().ToString() + Id).GetHashCode();
+        }
+        #endregion
+
+        #region Private Methods
+        
+        private Type GetRealType()
+        {
+            var type = GetType();
+            if (type.ToString().Contains("Castle.Proxies."))
+                return type.BaseType;
+
+            return type;
         }
         #endregion
     }

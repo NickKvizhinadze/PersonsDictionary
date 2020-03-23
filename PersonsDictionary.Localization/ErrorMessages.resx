@@ -147,4 +147,7 @@
   <data name="StringLength" xml:space="preserve">
     <value>{0} ველი უნდა შეიცავდეს {1}</value>
   </data>
+  <data name="SuchRelationAlreadyExists" xml:space="preserve">
+    <value>ასეთი კავშირი უკვე არსებობს</value>
+  </data>
 </root>

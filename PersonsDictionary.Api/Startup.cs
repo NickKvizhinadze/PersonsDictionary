@@ -32,7 +32,8 @@ namespace PersonsDictionary.Api
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped(_ => new ApplicationDbContext(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors(o => o.AddPolicy("CorsPolicy",
                 bullder =>
                 {
@@ -44,7 +45,7 @@ namespace PersonsDictionary.Api
 
             services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
             services.Configure<ConnectionStrings>(Configuration.GetSection(nameof(ConnectionStrings)));
-            
+
             services.AddSingleton(Configuration);
             services.AddAutoMapper();
 

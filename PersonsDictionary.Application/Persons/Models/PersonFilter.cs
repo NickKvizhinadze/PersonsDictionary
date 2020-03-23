@@ -21,7 +21,7 @@ namespace PersonsDictionary.Application.Persons.Models
         [FilterMethod(FilterMethods.Equal, nameof(Person.Gender))]
         public Gender? Gender { get; set; }
 
-        [FilterMethod(FilterMethods.Equal, nameof(Person.CityId))]
+        [FilterMethod(FilterMethods.Equal, nameof(Person.City.Id))]
         public int? CityId { get; set; }
     }
 }

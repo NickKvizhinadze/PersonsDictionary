@@ -14,11 +14,11 @@ namespace PersonsDictionary.Persistence.Persons
             modelBuilder.Entity<Person>().Property(e => e.PersonalId).IsRequired().HasMaxLength(11);
             modelBuilder.Entity<Person>().Property(e => e.Gender).IsRequired();
             modelBuilder.Entity<Person>().Property(e => e.BirthDate).IsRequired();
-            modelBuilder.Entity<Person>().Property(e => e.CityId).IsRequired();
-            modelBuilder.Entity<Person>().HasOne(e => e.City).WithMany(e => e.Persons);
+            modelBuilder.Entity<Person>().HasOne(e => e.City).WithMany().IsRequired();
             modelBuilder.Entity<Person>().HasMany(e => e.PhoneNumbers).WithOne(e => e.Person).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Person>().HasMany(e => e.Relations).WithOne(e => e.Person).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Person>().HasMany(e => e.RelatedToRelations).WithOne(e => e.RelatedPerson);
+            modelBuilder.Entity<Person>().HasMany(e => e.Relations).WithOne(e => e.Person)
+                .OnDelete(DeleteBehavior.Cascade)
+                .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

@@ -5,15 +5,26 @@ namespace PersonsDictionary.Domain.Persons
 {
     public class PersonRelation: Entity
     {
-        #region Navigation Properties
-        public int PersonId { get; set; }
-        public int RelatedPersonId { get; set; }
-        public PersonRelationType Type { get; set; }
+        #region Constructor 
+        private PersonRelation()
+        {
+        }
+
+        public PersonRelation(PersonRelationType type, Person person, Person relatedPerson)
+        {
+            Type = type;
+            Person = person;
+            RelatedPerson = relatedPerson;
+        }
         #endregion
 
         #region Navigation Properties
-        public Person Person { get; set; }
-        public Person RelatedPerson { get; set; }
+        public PersonRelationType Type { get; private set; }
+        #endregion
+
+        #region Navigation Properties
+        public Person Person { get; private set; }
+        public Person RelatedPerson { get; private set; }
         #endregion
     }
 }

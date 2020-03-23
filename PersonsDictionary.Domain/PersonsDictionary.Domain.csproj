@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PersonsDictionary.Common\PersonsDictionary.Common.csproj" />
     <ProjectReference Include="..\PersonsDictionary.Localization\PersonsDictionary.Localization.csproj" />
   </ItemGroup>
 

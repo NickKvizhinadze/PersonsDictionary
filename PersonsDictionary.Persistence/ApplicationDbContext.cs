@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonsDictionary.Persistence.Persons;
 using PersonsDictionary.Persistence.Cities;
+using PersonsDictionary.Domain.Persons;
 
 namespace PersonsDictionary.Persistence
 {
@@ -21,8 +22,10 @@ namespace PersonsDictionary.Persistence
         {
             _connectionString = connectionString;
         }
+        #endregion
 
-
+        #region Properties
+        //public DbSet<PersonRelation> PersonRelations { get; set; }
         #endregion
 
         #region Methods

@@ -64,34 +64,40 @@ namespace PersonsDictionary.Application.Persons
             var result = new Result<int>();
             try
             {
-                var person = _mapper.Map<Person>(model);
+                var city = await _uow.Cities.GetByIdAsync(model.CityId);
+                Person person;
+                //Mapper not maps ids
+                List<PhoneNumber> phoneNumbers = _mapper.Map<List<PhoneNumber>>(model.PhoneNumbers);
 
                 if (id > 0)
                 {
-                    var existingNumbers = await _uow.PhoneNumbers.GetByPersonIdAsync(id);
+                    person = await _uow.Persons.GetByIdAsync(id);
+                    person.Update(model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city);
+                    person.ManagePhoneNumbers(phoneNumbers);
+                    ////TODO: must move into entity model
+                    //var existingNumbers = await _uow.PhoneNumbers.GetByPersonIdAsync(id);
+                    //if (person.PhoneNumbers?.Any() == true)
+                    //{
+                    //    var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.PhoneNumbers.All(n => n.Id != en.Id));
+                    //    if (numbersToDelete.Any())
+                    //        _uow.PhoneNumbers.DeleteRange(numbersToDelete);
 
-                    person.Id = id;
-                    person.ImageUrl = await _uow.Persons.GetImageUrlAsync(person.Id);
+                    //    var numbersToUpdate = person.PhoneNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
+                    //    if (numbersToUpdate.Any())
+                    //        _uow.PhoneNumbers.UpdateRange(numbersToUpdate);
 
-                    if (person.PhoneNumbers?.Any() == true)
-                    {
-                        var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.PhoneNumbers.All(n => n.Id != en.Id));
-                        if (numbersToDelete.Any())
-                            _uow.PhoneNumbers.DeleteRange(numbersToDelete);
-
-                        var numbersToUpdate = person.PhoneNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
-                        if (numbersToUpdate.Any())
-                            _uow.PhoneNumbers.UpdateRange(numbersToUpdate);
-
-                        var numbersToAdd = person.PhoneNumbers.Where(n => n.Id == 0);
-                        if (numbersToAdd.Any())
-                            _uow.PhoneNumbers.AddRange(numbersToAdd);
-                    }
+                    //    var numbersToAdd = person.PhoneNumbers.Where(n => n.Id == 0);
+                    //    if (numbersToAdd.Any())
+                    //        _uow.PhoneNumbers.AddRange(numbersToAdd);
+                    //}
 
                     _uow.Persons.Update(person);
                 }
                 else
+                {
+                    person = new Person(id, model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city);
                     _uow.Persons.Add(person);
+                }
 
                 await _uow.SaveAsync();
                 _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Person added successfully | Id: {id}");
@@ -163,7 +169,7 @@ namespace PersonsDictionary.Application.Persons
 
                 imageUrl = await ImageManager.UploadImageAsync(image, webRootDir);
 
-                person.ImageUrl = imageUrl;
+                person.AddImage(imageUrl);
                 _uow.Persons.Update(person);
                 await _uow.SaveAsync();
 
@@ -199,17 +205,19 @@ namespace PersonsDictionary.Application.Persons
                     return result;
                 }
 
-                var relation = new PersonRelation
+                var addRelationResult = person.AddRelation(model.Type, relatedPerson);
+                if (addRelationResult.Succeeded)
                 {
-                    PersonId = id,
-                    RelatedPersonId = model.RelatedPersonId,
-                    Type = model.Type
-                };
-                _uow.PersonRelations.Add(relation);
-
-                await _uow.SaveAsync();
-                result.Data = relation.Id;
-                _logger.LogError($"{nameof(PersonsService)} => {nameof(AddedRelatedPersonAsync)} | Relation Added to person | Id: {id}");
+                    _uow.Persons.Update(person);
+                    await _uow.SaveAsync();
+                    result.Data = person.Id;
+                    _logger.LogInformation($"{nameof(PersonsService)} => {nameof(AddedRelatedPersonAsync)} | Relation Added to person | Id: {id}");
+                }
+                else
+                {
+                    result.AddErrors(addRelationResult.Errors);
+                    _logger.LogError($"{nameof(PersonsService)} => {nameof(AddedRelatedPersonAsync)} | Relation have not passed validation | Id: {id}");
+                }
             }
             catch (Exception ex)
             {

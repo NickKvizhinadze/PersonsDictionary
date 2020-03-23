@@ -12,7 +12,7 @@ namespace PersonsDictionary.Persistence.Repositories
     {
         #region Fields
 
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
         private DbSet<T> _entities;
 
         #endregion

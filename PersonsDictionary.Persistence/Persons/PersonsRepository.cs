@@ -63,8 +63,29 @@ namespace PersonsDictionary.Persistence.Persons
         public Task<string> GetImageUrlAsync(int id)
             => TableNoTracking.Where(p => p.Id == id).Select(p => p.ImageUrl).FirstOrDefaultAsync();
 
-        public Task<List<KeyValuePair<int, string>>> GetPersonsCollectionAsync() 
-            => TableNoTracking.Select(p => new KeyValuePair<int,string>(p.Id, $"{p.FirstName} {p.LastName}")).ToListAsync();
+        public Task<List<KeyValuePair<int, string>>> GetPersonsCollectionAsync()
+            => TableNoTracking.Select(p => new KeyValuePair<int, string>(p.Id, $"{p.FirstName} {p.LastName}")).ToListAsync();
+
+        public override void Update(Person entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+
+            foreach (var relation in entity.Relations)
+            {
+                if (relation.Id > 0)
+                    _context.Entry(relation).State = EntityState.Modified;
+                else
+                    _context.Entry(relation).State = EntityState.Added;
+            }
+
+            foreach (var phoneNumber in entity.PhoneNumbers)
+            {
+                if (phoneNumber.Id > 0)
+                    _context.Entry(phoneNumber).State = EntityState.Modified;
+                else
+                    _context.Entry(phoneNumber).State = EntityState.Added;
+            }
+        }
         #endregion
 
         #region Private Methods

@@ -149,5 +149,14 @@ namespace PersonsDictionary.Localization {
                 return ResourceManager.GetString("StringLength", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ასეთი კავშირი უკვე არსებობს.
+        /// </summary>
+        public static string SuchRelationAlreadyExists {
+            get {
+                return ResourceManager.GetString("SuchRelationAlreadyExists", resourceCulture);
+            }
+        }
     }
 }
