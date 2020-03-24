@@ -59,45 +59,47 @@ namespace PersonsDictionary.Application.Persons
             return _mapper.Map<PersonDto>(result);
         }
 
-        public async Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0)
+        public async Task<Result<int>> InsertAsync(PersonCreateRequest model)
         {
             var result = new Result<int>();
             try
             {
                 var city = await _uow.Cities.GetByIdAsync(model.CityId);
+                var phoneNumbers = model.PhoneNumbers.Select(n => new PhoneNumber(n.Id, n.Type, n.Value)).ToList();
+                var person = new Person(model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city, phoneNumbers);
+                _uow.Persons.Add(person);
+
+                await _uow.SaveAsync();
+                result.Data = person.Id;
+                _logger.LogInformation($"{nameof(PersonsService)} => {nameof(InsertAsync)} | Person added successfully | Id: {result.Data}");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(PersonsService)} => {nameof(InsertAsync)} | Person have not added successfully | Id: {result.Data} | ex: {ex} | trace: {ex.StackTrace}");
+
+                result.AddError(ErrorMessages.InternalServerError, HttpStatusCode.InternalServerError);
+            }
+            return result;
+        }
+
+        public async Task<Result<int>> UpdateAsync(int id, PersonCreateRequest model)
+        {
+            var result = new Result<int>();
+            try
+            {
                 Person person;
-                //Mapper not maps ids
-                List<PhoneNumber> phoneNumbers = _mapper.Map<List<PhoneNumber>>(model.PhoneNumbers);
+                var city = await _uow.Cities.GetByIdAsync(model.CityId);
+                var phoneNumbers = model.PhoneNumbers.Select(n => new PhoneNumber(n.Id, n.Type, n.Value)).ToList();
 
-                if (id > 0)
+                person = await _uow.Persons.GetByIdWithTrackingAsync(id);
+                if(person == null)
                 {
-                    person = await _uow.Persons.GetByIdAsync(id);
-                    person.Update(model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city);
-                    person.ManagePhoneNumbers(phoneNumbers);
-                    ////TODO: must move into entity model
-                    //var existingNumbers = await _uow.PhoneNumbers.GetByPersonIdAsync(id);
-                    //if (person.PhoneNumbers?.Any() == true)
-                    //{
-                    //    var numbersToDelete = existingNumbers.Where(en => en.Id != 0 && person.PhoneNumbers.All(n => n.Id != en.Id));
-                    //    if (numbersToDelete.Any())
-                    //        _uow.PhoneNumbers.DeleteRange(numbersToDelete);
-
-                    //    var numbersToUpdate = person.PhoneNumbers.Where(n => n.Id != 0 && existingNumbers.Any(en => en.Id == n.Id));
-                    //    if (numbersToUpdate.Any())
-                    //        _uow.PhoneNumbers.UpdateRange(numbersToUpdate);
-
-                    //    var numbersToAdd = person.PhoneNumbers.Where(n => n.Id == 0);
-                    //    if (numbersToAdd.Any())
-                    //        _uow.PhoneNumbers.AddRange(numbersToAdd);
-                    //}
-
-                    _uow.Persons.Update(person);
+                    result.AddError(ErrorMessages.PersonNotFound);
+                    return result;
                 }
-                else
-                {
-                    person = new Person(id, model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city);
-                    _uow.Persons.Add(person);
-                }
+
+                person.Update(model.FirstName, model.LastName, model.PersonalId, model.Gender, model.BirthDate, city);
+                person.ManagePhoneNumbers(phoneNumbers);                
 
                 await _uow.SaveAsync();
                 _logger.LogInformation($"{nameof(PersonsService)} => {nameof(UpdateAsync)} | Person added successfully | Id: {id}");

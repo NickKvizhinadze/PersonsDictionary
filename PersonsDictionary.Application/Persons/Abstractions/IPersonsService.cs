@@ -10,7 +10,8 @@ namespace PersonsDictionary.Application.Persons.Abstractions
         Task<ListResult<PersonDto>> GetAllAsync(string searchValue, Paging paging);
         Task<ListResult<PersonDto>> GetAllAsync(PersonFilter filter, Paging paging);
         Task<PersonDto> GetByIdAsync(int id);
-        Task<Result<int>> UpdateAsync(PersonCreateRequest model, int id = 0);
+        Task<Result<int>> InsertAsync(PersonCreateRequest model);
+        Task<Result<int>> UpdateAsync(int id, PersonCreateRequest model);
         Task<Result> DeleteAsync(int id, string webRoot);
         Task<Result<string>> UploadPhotoAsync(int id, IFormFile image, string webRootDir);
         Task<Result<int>> AddedRelatedPersonAsync(int id, RelatedPersonCreateRequest model);

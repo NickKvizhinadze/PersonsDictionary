@@ -57,6 +57,9 @@ namespace PersonsDictionary.Persistence.Persons
             return (result, totalCount);
         }
 
+        public Task<Person> GetByIdWithTrackingAsync(int id)
+            => GetWithIncludes(true).FirstOrDefaultAsync(p => p.Id == id);
+
         public override Task<Person> GetByIdAsync(int id)
             => GetWithIncludes().FirstOrDefaultAsync(p => p.Id == id);
 
@@ -66,32 +69,33 @@ namespace PersonsDictionary.Persistence.Persons
         public Task<List<KeyValuePair<int, string>>> GetPersonsCollectionAsync()
             => TableNoTracking.Select(p => new KeyValuePair<int, string>(p.Id, $"{p.FirstName} {p.LastName}")).ToListAsync();
 
-        public override void Update(Person entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
+        //public override void Update(Person entity)
+        //{
+        //    _context.Entry(entity).State = EntityState.Modified;
 
-            foreach (var relation in entity.Relations)
-            {
-                if (relation.Id > 0)
-                    _context.Entry(relation).State = EntityState.Modified;
-                else
-                    _context.Entry(relation).State = EntityState.Added;
-            }
+        //    foreach (var relation in entity.Relations)
+        //    {
+        //        if (relation.Id > 0)
+        //            _context.Entry(relation).State = EntityState.Modified;
+        //        else
+        //            _context.Entry(relation).State = EntityState.Added;
+        //    }
 
-            foreach (var phoneNumber in entity.PhoneNumbers)
-            {
-                if (phoneNumber.Id > 0)
-                    _context.Entry(phoneNumber).State = EntityState.Modified;
-                else
-                    _context.Entry(phoneNumber).State = EntityState.Added;
-            }
-        }
+        //    foreach (var phoneNumber in entity.PhoneNumbers)
+        //    {
+        //        if (phoneNumber.Id > 0)
+        //            _context.Entry(phoneNumber).State = EntityState.Modified;
+        //        else
+        //            _context.Entry(phoneNumber).State = EntityState.Added;
+        //    }
+        //}
         #endregion
 
         #region Private Methods
-        private IQueryable<Person> GetWithIncludes()
+        private IQueryable<Person> GetWithIncludes(bool withTracking = false)
         {
-            return TableNoTracking
+            var table = withTracking ? Table : TableNoTracking;
+            return table
                 .Include(p => p.City)
                 .Include(p => p.PhoneNumbers)
                 .Include(p => p.Relations)

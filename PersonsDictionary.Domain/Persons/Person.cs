@@ -21,10 +21,11 @@ namespace PersonsDictionary.Domain.Persons
         {
         }
 
-        public Person(int id, string firstName, string lastName, string personalId, Gender gender, DateTime birthDate, City city)
-            : base(id)
+        public Person(string firstName, string lastName, string personalId, Gender gender, DateTime birthDate, City city, List<PhoneNumber> phoneNumbers)
+        //: base(id)
         {
             Update(firstName, lastName, personalId, gender, birthDate, city);
+            _phoneNumbers.AddRange(phoneNumbers);
         }
         #endregion
 
@@ -63,27 +64,21 @@ namespace PersonsDictionary.Domain.Persons
             return result;
         }
 
-        public void ManagePhoneNumbers(List<PhoneNumber> phoneNumbers)
+        public void ManagePhoneNumbers(List<PhoneNumber> newPhoneNumbers)
         {
+
             //Deleting numbers
-
-            var phoneToRemove = _phoneNumbers.Where(en => en.Id != 0 && phoneNumbers.All(n => n.Id != en.Id));
-
-
-            _phoneNumbers.RemoveAll(en => phoneNumbers.All(n => n.Id != en.Id));
+            _phoneNumbers.RemoveAll(en => newPhoneNumbers.All(n => n.Id != en.Id));
 
             //Updating Numbers
-            foreach (var item in phoneNumbers)
+            foreach (var item in newPhoneNumbers)
             {
                 var phoneNumber = _phoneNumbers.SingleOrDefault(n => n.Id == item.Id);
                 if (phoneNumber != null)
-                {
-                    phoneNumber.Type = item.Type;
-                    phoneNumber.Value = item.Value;
-                }
+                    phoneNumber.Update(item.Type, item.Value);
             }
 
-            var numbersToAdd = phoneNumbers.Where(n => n.Id == 0);
+            var numbersToAdd = newPhoneNumbers.Where(n => n.Id == 0);
             if (numbersToAdd.Any())
                 _phoneNumbers.AddRange(numbersToAdd);
         }

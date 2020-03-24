@@ -59,8 +59,8 @@ namespace PersonsDictionary.Api.Persons.Controllers
         [HttpPost]
         [ModelState]
         public async Task<ActionResult<int>> Create([FromBody] PersonCreateViewModel model)
-        {            
-            var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model));
+        {
+            var result = await _service.InsertAsync(_mapper.Map<PersonCreateRequest>(model));
 
             return CustomResult(result);
         }
@@ -69,7 +69,7 @@ namespace PersonsDictionary.Api.Persons.Controllers
         [ModelState]
         public async Task<ActionResult<int>> Update(int id, [FromBody] PersonCreateViewModel model)
         {
-            var result = await _service.UpdateAsync(_mapper.Map<PersonCreateRequest>(model), id);
+            var result = await _service.UpdateAsync(id, _mapper.Map<PersonCreateRequest>(model));
 
             return CustomResult(result);
         }

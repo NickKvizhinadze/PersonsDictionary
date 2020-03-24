@@ -11,7 +11,6 @@ namespace PersonsDictionary.Application.Persons
         {
             CreateMap<PersonCreateRequest, Person>();
             CreateMap<PhoneNumberDto, PhoneNumber>()
-                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ReverseMap();
             CreateMap<Person, PersonDto>()
                 .ForMember(dest => dest.CityName, opt => opt.ResolveUsing(src => src.City?.Name))
